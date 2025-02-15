@@ -2,27 +2,27 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
+app.use(express.static("dist")); //show dist folder in case connected to the root
 app.use(cors()); // <-- This allows connection from all origins
 app.use(express.json());
 
-// let notes = [
-
-//   {
-//     id: "1",
-//     content: "HTML is easy",
-//     important: true,
-//   },
-//   {
-//     id: "2",
-//     content: "Browser can execute only JavaScript",
-//     important: false,
-//   },
-//   {
-//     id: "3",
-//     content: "GET and POST are the most important methods of HTTP protocol",
-//     important: true,
-//   },
-// ];
+let notes = [
+  {
+    id: "1",
+    content: "HTML is easy",
+    important: true,
+  },
+  {
+    id: "2",
+    content: "Browser can execute only JavaScript",
+    important: false,
+  },
+  {
+    id: "3",
+    content: "GET and POST are the most important methods of HTTP protocol",
+    important: true,
+  },
+];
 
 //GET root
 app.get("/", (request, response) => {

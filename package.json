@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "@powershell if (Test-Path dist) { Remove-Item -Recurse -Force dist } && cd ../part2-notes && npm run build && @powershell Copy-Item ../part2-notes/dist -Recurse ../fullstackopen-notes-backend/dist",
+    "build:ui": "@powershell if (Test-Path dist) { Remove-Item -Recurse -Force dist } && cd ../fullstackopen-notes-frontend && npm run build && @powershell Copy-Item ../fullstackopen-notes-frontend/dist -Recurse ../fullstackopen-notes-backend/dist",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "lint": "eslint ."
   },

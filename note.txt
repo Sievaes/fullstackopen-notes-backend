@@ -4,3 +4,6 @@ npm install express
 npm install --save-dev nodemon
 npm install dotenv
 npm install mongoose
+npm install eslint @eslint/js --save-dev
+npx eslint --init
+npm install --save-dev @stylistic/eslint-plugin-js

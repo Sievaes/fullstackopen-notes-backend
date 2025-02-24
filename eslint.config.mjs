@@ -29,6 +29,6 @@ export default [
     },
   },
   {
-    ignores: ["dist/**", "build/**", "mongo.js"],
+    ignores: ["dist/**", "build/**"],
   },
 ];

@@ -7,3 +7,7 @@ npm install mongoose
 npm install eslint @eslint/js --save-dev
 npx eslint --init
 npm install --save-dev @stylistic/eslint-plugin-js
+npm install cross-env   (to make NODE_ENV work cross platform mac & win)
+npm install --save-dev supertest    (to test API for example)
+npm install express-async-errors    (no need to use next(error) for errorHandler)
+npm install bcrypt   (for password encryption)

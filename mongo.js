@@ -1,38 +1,52 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-if (process.argv.length < 3) {
-  console.log("give password as argument");
-  process.exit(1);
-}
+//USING TEST DATABASE
+const url = process.env.TEST_MONGODB_URI;
 
-//takes third argument when "node mongo.js password(password is the third argument)"
-const password = process.argv[2];
-
-const url = `mongodb+srv://masteruser:${password}@cluster0.1nwly.mongodb.net/noteApp?retryWrites=true&w=majority&appName=noteApp`;
-
+//sets that that queries sent to database doesnt have to be in schema for the query to return data.
 mongoose.set("strictQuery", false);
 
 mongoose.connect(url);
 
 const noteSchema = new mongoose.Schema({
-  content: String,
+  content: {
+    type: String,
+    required: true,
+    minlength: 5,
+  },
   important: Boolean,
+});
+
+noteSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
 });
 
 const Note = mongoose.model("Note", noteSchema);
 
 const note = new Note({
-  content: "HTML is easy",
-  important: true,
+  content: `${process.argv[3]}`,
+  important: `${process.argv[4]}`,
 });
 
-// note.save().then((result) => {
-//   mongoose.connection.close();
-// });
+//if no arguments passed other than "node mongo.js <password>" it will list all stored notes
+if (process.argv.length < 5) {
+  Note.find().then((notes) => {
+    notes.map((note) =>
+      console.log("content:", `${note.content},`, "important:", note.important)
+    );
 
-Note.find({ important: true }).then((result) => {
-  result.forEach((note) => {
-    console.log(note);
+    mongoose.connection.close();
   });
+  return;
+}
+
+//save new note to mongo with "node mongo.js <password> content important" and returns the result to console
+note.save().then((result) => {
+  console.log(result);
   mongoose.connection.close();
 });
